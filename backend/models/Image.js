@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const imageSchema = new mongoose.Schema(
   {
     // Nome do arquivo da imagem (campo obrigatório)
-    name: {
+    fileName: {
       type: String, // Tipo do dado: String
       required: [true, "O nome da imagem é obrigatório"], // Mensagem de validação personalizada
       trim: true, // Remove espaços em branco no início e no final
@@ -36,7 +36,7 @@ const imageSchema = new mongoose.Schema(
 
 // Middleware (pré-save) para fazer algo antes de salvar a imagem no banco
 imageSchema.pre("save", function (next) {
-  console.log(`Salvando a imagem: ${this.name}`); // Loga uma mensagem no console antes de salvar
+  console.log(`Salvando a imagem: ${this.fileName}`); // Loga uma mensagem no console antes de salvar
   next(); // Continua para o próximo middleware ou salva o documento
 });
 

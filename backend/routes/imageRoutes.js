@@ -5,24 +5,37 @@ const router = express.Router();
 // Importa o modelo do Mongoose para a coleção de imagens no MongoDB
 const Image = require("../models/Image");
 
-// Rota GET para buscar todas as imagens salvas no banco de dados
-router.get("/images", async (req, res) => {
+// Rota GET para buscar imagens específicas com base em parâmetros
+router.get("/bannerImages", async (req, res) => {
   try {
-    // Busca todos os documentos na coleção "images"
-    const images = await Image.find();
+    // Obtém os nomes das imagens da query string
+    const { images } = req.query;
 
-    // Cria um array de objetos contendo os dados e URLs das imagens
-    const imagesWithUrl = images.map((image) => ({
-      name: image.name, // Nome do arquivo
-      url: `http://localhost:5001/images/${image.name}`, // Gera a URL com base no nome do arquivo
+    // Verifica se os parâmetros foram fornecidos
+    if (!images) {
+      return res
+        .status(400)
+        .json({ error: "Nenhum parâmetro de imagens fornecido." });
+    }
+
+    // Divide a string de imagens em um array (separado por vírgulas)
+    const imageNames = images.split(",");
+
+    // Busca no banco de dados somente as imagens que correspondem aos nomes fornecidos
+    const filteredImages = await Image.find({ fileName: { $in: imageNames } });
+
+    // Mapeia as imagens para incluir URLs
+    const imagesWithUrl = filteredImages.map((image) => ({
+      fileName: image.fileName, // Nome do arquivo
+      url: `http://localhost:5001/images/${image.fileName}`, // Gera a URL com base no nome do arquivo
       description: image.description, // Descrição da imagem
     }));
 
-    // Retorna o array em formato JSON como resposta
+    // Retorna o array filtrado em formato JSON
     res.status(200).json(imagesWithUrl);
   } catch (error) {
-    // Responde com status 500 em caso de erro e exibe uma mensagem
-    console.error("Erro ao buscar imagens:", error);
+    // Responde com status 500 em caso de erro
+    console.error("Erro ao buscar imagens específicas:", error);
     res.status(500).json({ error: "Erro ao buscar imagens." });
   }
 });
@@ -31,10 +44,10 @@ router.get("/images", async (req, res) => {
 router.post("/images", async (req, res) => {
   try {
     // Extrai os campos do corpo da requisição
-    const { name, imageUrl, description } = req.body;
+    const { fileName, imageUrl, description } = req.body;
 
     // Cria uma nova instância do modelo "Image"
-    const newImage = new Image({ name, imageUrl, description });
+    const newImage = new Image({ fileName, imageUrl, description });
 
     // Salva o novo documento no MongoDB
     const savedImage = await newImage.save();

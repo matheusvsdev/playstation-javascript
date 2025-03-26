@@ -41,7 +41,13 @@ app.listen(PORT, () => {
 const imgFolderPath = path.join(__dirname, "../frontend/img");
 
 // Lista de imagens permitidas (apenas esses arquivos serão salvos)
-const allowedImages = ["assassins.jpg", "death.jpg", "forza.jpg", "nightmares.jpg", "split.jpg"];
+const allowedImages = [
+  "assassins.jpg",
+  "death.jpg",
+  "forza.jpg",
+  "nightmares.jpg",
+  "split.jpg",
+];
 
 function saveImagesToDatabase() {
   // Lê os arquivos da pasta de imagens
@@ -56,11 +62,11 @@ function saveImagesToDatabase() {
       if (allowedImages.includes(file)) {
         try {
           // Verifica se a imagem já existe no banco
-          const existingImage = await Image.findOne({ name: file });
+          const existingImage = await Image.findOne({ fileName: file });
           if (!existingImage) {
             // Cria um novo documento para a imagem
             const newImage = new Image({
-              name: file, // Nome do arquivo da imagem
+              fileName: file, // Nome do arquivo da imagem
               imageUrl: `http://localhost:5001/images/${file}`, // URL para acessar a imagem
               description: "Imagem permitida adicionada automaticamente", // Descrição genérica
             });
