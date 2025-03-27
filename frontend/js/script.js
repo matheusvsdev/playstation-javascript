@@ -60,7 +60,7 @@ let currentIndex = 0;
 
 // Carrega os dois carrosséis dinamicamente
 loadCarousel(
-  "http://localhost:5001/api/bannerImages?images=assassins.jpg,death.jpg,forza.jpg,nightmares.jpg,split.jpg",
+  "http://localhost:5001/api/bannerImages?images=assassins.jpg,death.jpg,forza.jpg,little.jpg,yakuza.jpg",
   imgContainer,
   thumbnailContainer
 );

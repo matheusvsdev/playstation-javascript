@@ -45,8 +45,8 @@ const allowedImages = [
   "assassins.jpg",
   "death.jpg",
   "forza.jpg",
-  "nightmares.jpg",
-  "split.jpg",
+  "little.jpg",
+  "yakuza.jpg",
 ];
 
 function saveImagesToDatabase() {
