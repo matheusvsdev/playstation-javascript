@@ -16,7 +16,7 @@ function updateCarousel(container, thumbnailsContainer) {
   const offset = containerWidth / 2 - activeImageWidth / 2;
 
   container.style.transform = `translateX(${
-    offset - currentIndex * (activeImageWidth + 50)
+    offset - currentIndex * (activeImageWidth + 55)
   }px)`;
 }
 
