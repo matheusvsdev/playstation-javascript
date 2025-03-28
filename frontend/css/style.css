@@ -41,7 +41,6 @@ body {
 
 .navbar-left ul {
   display: flex;
-  align-items: center;
   gap: 15px;
   list-style: none;
 }
@@ -82,6 +81,40 @@ body {
 .navbar-right a:hover {
   opacity: 1;
   transform: scale(1.1);
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  background: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+  left: 10px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+.line {
+  width: 100%;
+  height: 3px;
+  background-color: #8f8e8e;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Estado ativo (animação das linhas) */
+.menu-toggle.active .line:nth-child(1) {
+  transform: translateY(5px) rotate(45deg); /* Primeira linha vira diagonal */
+}
+
+.menu-toggle.active .line:nth-child(2) {
+  opacity: 0; /* Segunda linha desaparece */
+}
+
+.menu-toggle.active .line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg); /* Terceira linha vira diagonal */
 }
 
 .input-container {
@@ -125,7 +158,7 @@ body {
 .img-container {
   display: flex;
   margin-top: 30px;
-  gap: 55px;
+  gap: 40px;
   transition: transform 0.5s ease;
   justify-content: center;
 }
@@ -194,14 +227,17 @@ body {
 }
 
 .console-image {
-  object-fit: cover;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .console-image img {
   width: 100%;
   max-width: 700px;
   max-height: 400px;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
 }
 
 .console {
@@ -419,12 +455,32 @@ p {
   margin: 0 5rem;
 }
 
-@media (max-width: 774px) {
-  /* Centraliza os itens da navbar em telas menores */
-  .navbar {
+@media (max-width: 892px) {
+
+  .menu-toggle {
+    display: flex;
+  }
+  
+  .sections {
+    overflow: hidden;
     flex-direction: column;
-    align-items: center;
-    gap: 20px; /* Aumenta espaçamento para itens centralizados */
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 25%;
+    background-color: #fff;
+    max-height: 0; /* Altura inicial */
+    transition: max-height 0.4s ease;
+    z-index: 1;
+  }
+
+  .sections.show {
+    max-height: 600px;
+    align-items: flex-start;
+  }
+
+  .sections li {
+    margin: 15px;
   }
 
   /* Adapta o container do console */
@@ -473,21 +529,13 @@ p {
 
 @media (max-width: 588px) {
   /* Centraliza os itens da navbar em telas menores */
-  .navbar-left ul {
-    display: none;
-  }
-
-  .navbar-right {
-    display: none;
-  }
-
-  .carousel-img {
-    max-width: 500px;
-    max-height: 300px;
-  }
   
+  .carousel-img {
+    max-width: 400px;
+  }
+
   .carousel-img.active {
-    max-width: 500px;
+    max-width: 400px;
   }
 
   .thumbnail {
@@ -533,6 +581,10 @@ p {
     font-size: 0.8rem;
     padding: 0.3rem 0.6rem; /* Reduz padding em telas pequenas */
     width: auto;
+  }
+
+  .comming-soon h2 {
+    font-size: 1.5rem;
   }
 
   /* Centraliza o conteúdo do aniversário */

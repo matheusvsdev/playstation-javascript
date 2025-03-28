@@ -1,3 +1,18 @@
+const toggleButton = document.querySelector(".menu-toggle");
+const menu = document.querySelector(".sections");
+
+// Seleciona os contêineres do DOM
+const imgContainer = document.querySelector(".img-container");
+const thumbnailContainer = document.querySelector(".thumbnail-container");
+
+// Define o índice inicial
+let currentIndex = 0;
+
+toggleButton.addEventListener("click", () => {
+  toggleButton.classList.toggle("active");
+  menu.classList.toggle("show");
+});
+
 // Função genérica para atualizar qualquer carrossel
 function updateCarousel(container, thumbnailsContainer) {
   const images = container.querySelectorAll(".carousel-img");
@@ -16,7 +31,7 @@ function updateCarousel(container, thumbnailsContainer) {
   const offset = containerWidth / 2 - activeImageWidth / 2;
 
   container.style.transform = `translateX(${
-    offset - currentIndex * (activeImageWidth + 55)
+    offset - currentIndex * (activeImageWidth + 40)
   }px)`;
 }
 
@@ -51,13 +66,6 @@ function loadCarousel(endpoint, container, thumbnailsContainer) {
     .catch((error) => console.error("Erro ao carregar imagens:", error));
 }
 
-// Seleciona os contêineres do DOM
-const imgContainer = document.querySelector(".img-container");
-const thumbnailContainer = document.querySelector(".thumbnail-container");
-
-// Define o índice inicial
-let currentIndex = 0;
-
 // Carrega os dois carrosséis dinamicamente
 loadCarousel(
   "http://localhost:5001/api/bannerImages?images=assassins.jpg,death.jpg,forza.jpg,little.jpg,yakuza.jpg",
@@ -72,7 +80,7 @@ const playstationThumbnails = [
     title: "Conheça todos os consoles e acessórios do PS5",
     subtitle: "Console PlayStation 5",
     description:
-      "Descubra a mais nova geração de jogos incríveis para PlayStation.",
+      "Explore uma nova era de jogos com o PS5 e seus gráficos impressionantes e desempenho ultrarrápido.",
     alt: "PlayStation 5",
   },
   {
@@ -80,7 +88,7 @@ const playstationThumbnails = [
     title: "Conheça todos os consoles e acessórios do PS5",
     subtitle: "Console PlayStation 5 Pro",
     description:
-      "Jogue títulos para PS5® com os visuais mais impressionantes de todos os tempos em um console PlayStation.",
+      "Descubra o PS5 Pro e experimente visuais incríveis e jogabilidade imersiva em seu console favorito.",
     alt: "PlayStation 5 Pro",
   },
   {
@@ -88,7 +96,7 @@ const playstationThumbnails = [
     title: "Conheça todos os consoles e acessórios do PS5",
     subtitle: "Headset sem fio PULSE Elite™",
     description:
-      "Ouça áudio de jogos mais realista neste modelo de headset confortável e equipado com microfone retrátil e bateria embutida de longa duração.",
+      "Mergulhe no áudio realista do PULSE Elite com microfone retrátil e bateria de longa duração integrada.",
     alt: "Headset PlayStation",
   },
   {
@@ -96,9 +104,11 @@ const playstationThumbnails = [
     title: "Conheça todos os consoles e acessórios do PS5",
     subtitle: "Fones de ouvido sem fio PULSE Explore™",
     description:
-      "Curta sons realistas aonde quer que os jogos levem você com um design portátil equipado com microfones ocultos e um estojo de carregamento para acompanhar.",
+      "Leve o som onde quiser com o PULSE Explore, portátil, com microfones ocultos e estojo para carregar.",
+    alt: "Fones de ouvido PlayStation",
   },
 ];
+
 
 // Seleciona os elementos DOM que serão atualizados
 const consoleTitle = document.getElementById("console-title");
